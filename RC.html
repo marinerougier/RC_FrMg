@@ -149,8 +149,7 @@
             var html = "";
             html += "<h1>Tâche 2: Tâche de sélection de visages</h1>";
             html += "<p class = 'justify'>A chaque essai, votre tâche sera de choisir, parmi les 12 visages, celui qui ressemble le plus à ";
-            html += "<b>un individu d'origine maghrébine</b>. ";
-            html += " Cette tâche est indépendante de la Tâche 1 que vous avez effectué précédemment: <b>Vous devez choisir le visage le plus typique d'un individu d'origine maghrébine en général</b>. ";
+            html += "<b>un individu d'origine maghrébine, autrement dit le visage 'le plus maghrébin'</b>. <br>";
             html += "<p class = 'justify'>Merci d'utiliser votre souris d'ordinateur pour sélectionner un visage.</p>";
             html += "<img width='200' style='padding: 0px' src='" + imgLink(474, 'ori') + "'>";
             return html;
@@ -167,7 +166,7 @@
             html += "<p class = 'justify'>Avant de commencer, merci de noter que : </br></br>";
             html += "<b>Il n'y a pas de bonne ou de mauvaise réponse !</b> ";
             html += "Vous devez juste faire un choix aussi <b>intuitivement</b> que possible. ";
-            html += "En moyenne, à chaque essai, les participants prennent <b>3 secondes</b> ";
+            html += "En moyenne, à chaque essai, les participants prennent en moyenne <b>3 secondes</b> ";
             html += "pour sélectionner un visage. Merci <b>d'essayer de maintenir un temps de réponse similaire</b>.</br></br>";
             html += "Dans cette tâche, vous devrez effectuer 150 essais.</p>";
             return html;
@@ -191,7 +190,7 @@
             type: 'html-mouse-response',
             stimulus: function () {
                 html = "";
-                html += "<p>Veuillez sélectionner le visage le plus similaire à celui d'un individu d'origine maghrébine.</b> </br></br>";
+                html += "<p>Veuillez sélectionner le visage le plus <b>maghrébin</b> </br></br>";
                 jsPsych.timelineVariable('trialImgs', true).map(function (e) {
                     html += "<img class='rcimg-12' src='" + e + "'>";
                 });
@@ -210,53 +209,6 @@
             var html = "";
             html += "<p class = 'justify'>La tâche de sélection de visages (Tâche 2) est terminée. Vous allez maintenant passer à la tâche 3.</br></p>";
             return html;
-        },
-    };
-
-    var ThermoPreamble = '<p class = "justify">Please indicate how warm or cold you feel toward the groups below. ' +
-        'To do so, use the following scale: ' +
-        'from 1 = “Coldest feelings” to 9 = “Warmest feelings”</p>';
-
-    var ThermoScale = ["1</br>Coldest feelings", "2", "3", "4", "5", "6", "7", "8", "9</br>Warmest feelings"];
-
-    var ThermoGrpItems = [
-        'Black people',
-        'White people',
-    ];
-
-
-    ThermoGrpItems = _.shuffle(ThermoGrpItems);
-
-    var questionsThermoGrp = [];
-    ThermoGrpItems.map(function (item) { questionsThermoGrp.push({ prompt: '<i>' + item + '</i>', labels: ThermoScale, required: true }); });
-
-    var ThermoGrp = {
-        type: 'survey-likert',
-        preamble: ThermoPreamble,
-        questions: questionsThermoGrp,
-        post_trial_gap: 300,
-
-        on_load: function () {
-            $(".jspsych-content-wrapper").css("height", "auto");
-            $(".jspsych-content-wrapper").scrollTop(0);
-        },
-
-        on_finish: function (data) {
-            $(".jspsych-content-wrapper").css("height", "700px");
-            console.log(data.responses);
-            var parsed_response = JSON.parse(data.responses);
-            if (ThermoGrpItems[0] == 'White people') {
-                jsPsych.data.addProperties({
-                    ThermoWhite: parsed_response.Q0,
-                    ThermoBlack: parsed_response.Q1,
-                });
-            } else {
-                jsPsych.data.addProperties({
-                    ThermoWhite: parsed_response.Q1,
-                    ThermoBlack: parsed_response.Q0,
-                });
-            }
-            console.log(jsPsych.data);
         },
     };
 
