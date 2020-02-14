@@ -315,12 +315,13 @@
 
             /* Send data to Firebase and redirect to Qualtrics */
             database
-                .ref(FBdirectory + "/" + id + "/")
+                .ref(FBdirectory + "/" + jspsych_id + "/")
                 .update({ dataRC })
                 .then(function () {
                             console.log("Data sent!");
-                            $("#jspsych-content").html(debriefing);
                             // jsPsych.data.displayData()
+                window.location.href = "https://marinerougier.github.io/RC_FrMg/RC.html?jspsych_id=" + jspsych_id 
+                                + "&vaast_condition_approach=" + vaast_condition_approach;            
                         });
         }
     });
